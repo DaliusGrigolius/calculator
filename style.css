@@ -1,8 +1,8 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .container {
   display: flex;
@@ -18,50 +18,65 @@ body {
   margin-bottom: 8px;
 }
 
-  .calculator {
-    max-width: 400px;
-    padding: 20px;
-    border: 1px solid grey;
-  }
-  .result {
-    padding: 16px 6px;
-    border: 1px solid grey;
-    width: 318px;
-    margin-bottom: 8px;
-    text-align: right;
-    font-size: 20px;
-  }
-  .secondary-container {
-    display: flex;
-  }
-  .action-buttons {
-    margin-bottom: 8px;
-  }
+.calculator {
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid grey;
+}
 
-  .action-buttons button {
-    background-color: gray;
-  }
+.result {
+  padding: 16px 6px;
+  border: 1px solid grey;
+  width: 318px;
+  margin-bottom: 8px;
+  text-align: right;
+  font-size: 20px;
+}
 
-  button {
-    font-size: 18px;
-    width: 80px;
-    height: 60px;
-    border: none;
-  }
+.action-line {
+  color: #a6a6a6;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.secondary-container {
+  display: flex;
+}
+
+.action-buttons {
+  margin-bottom: 8px;
+}
+
+.action-buttons button {
+  background-color: gray;
+}
+
+button {
+  width: 80px;
+  height: 60px;
+  border: none;
+  font-size: 18px;
+}
 
 button:hover {
   opacity: 0.8;
 }
 
-  .right-side {
-    margin-bottom: 4px;
-  }
-  .right-side button {
-    height: 100%;
-    margin-left: 4px;
-    background-color: rgb(104, 104, 192);
-    border: none;
-  }
-  .row {
-    margin-bottom: 4px;
-  }
+.right-side {
+  margin-bottom: 4px;
+}
+
+.right-side button {
+  height: 100%;
+  margin-left: 4px;
+  background-color: #add8e6;
+  border: 1px solid #add8e6;
+}
+
+.row {
+  margin-bottom: 4px;
+}
+
+.weird {
+  background-color: brown;
+}
