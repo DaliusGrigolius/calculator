@@ -5,125 +5,132 @@ const colorButtons = document.querySelector(".color-buttons");
 const calculator = document.querySelector(".calculator");
 const additionButton = document.getElementById("addition");
 const actionButtons = document.querySelectorAll(".action-buttons button");
+const equalButton = document.querySelector(".right-side button");
+
 // Calculator functionality
 
 let dotAdded = false;
 let result = 0;
-let actionPressed = false;
 
-for (let i = 0; i < numberButtons.length; i++) {
-  const button = numberButtons[i];
+const handleNumberButtonClick = (button) => {
+	button.addEventListener("click", () => {
+		const value = button.innerText;
 
-  button.addEventListener("click", () => {
-    const value = button.innerText;
+		switch (value) {
+			case "C":
+				resultTag.innerText = 0;
+				actionLineTag.innerText = "";
+				result = 0;
+				dotAdded = false;
+				break;
+			case ".":
+				if (!dotAdded) {
+					resultTag.innerText += value;
+				}
 
-    switch (value) {
-      case "C":
-        resultTag.innerText = 0;
-        result = 0;
-        dotAdded = false;
-        break;
-      case ".":
-        if (!dotAdded) {
-          resultTag.innerText += value;
-        }
+				dotAdded = true;
+				break;
 
-        dotAdded = true;
-        break;
+			default:
+				if (resultTag.innerText === "0") {
+					resultTag.innerText = value;
+				} else {
+					resultTag.innerText += value;
+				}
+				break;
+		}
+	});
+};
 
-      default:
-        if (resultTag.innerText === "0") {
-          resultTag.innerText = value;
-        } else {
-          resultTag.innerText += value;
-        }
-        break;
-    }
-  });
-}
+const handleActionButtonClick = (button) => {
+	button.addEventListener("click", () => numbersAction(button.value));
+};
 
-for (let i = 0; i < actionButtons.length; i++) {
-  const actionButton = actionButtons[i];
+const numbersAction = (symbol) => {
+	const resultValue = Number(resultTag.innerText);
 
-  actionButton.addEventListener("click", () =>
-    numbersAction(actionButton.value)
-  );
-}
+	modifyActionLine(symbol, resultValue, result);
+	const actionValue = makeActionBySymbol(symbol, resultValue, result);
+	result = actionValue;
 
-function numbersAction(symbol) {
-  const resultValue = Number(resultTag.innerText);
+	resultTag.innerText = 0;
+	dotAdded = false;
+};
 
-  modifyActionLine(symbol, resultValue, result);
-  const actionValue = makeActionBySymbol(symbol, resultValue, result);
-  result = actionValue;
+const modifyActionLine = (symbol, value, result) => {
+	const actionValue = makeActionBySymbol(symbol, value, result);
 
-  resultTag.innerText = 0;
-}
+	actionLineTag.innerText = `${result} ${symbol} ${value} = ${actionValue}`;
+};
 
-function modifyActionLine(symbol, value, result) {
-  const actionValue = makeActionBySymbol(symbol, value, result);
+const makeActionBySymbol = (symbol, value, result) => {
+	switch (symbol) {
+		case "+":
+			return result + value;
+		case "-":
+			return result - value;
+		case "*":
+			return result * value;
+		case "/":
+			return result / value;
+		default:
+			return 0;
+	}
+};
 
-  actionLineTag.innerText = `${result} ${symbol} ${value} = ${actionValue}`;
-}
+const handleEqualButtonClick = () => {
+	resultTag.innerText = 0;
+	actionLineTag.innerText = result;
+};
 
-function makeActionBySymbol(symbol, value, result) {
-  switch (symbol) {
-    case "+":
-      return result + value;
-    case "-":
-      return result - value;
-    case "*":
-      return result * value;
-    case "/":
-      return result / value;
-    default:
-      return 0;
-  }
-}
+equalButton.addEventListener("click", handleEqualButtonClick);
+numberButtons.forEach(handleNumberButtonClick);
+actionButtons.forEach(handleActionButtonClick);
 
 // Color functionality
 
 const firstColor = {
-  code: "white",
-  label: "Balta",
+	code: "white",
+	label: "Balta",
 };
 
 const secondColor = {
-  code: "green",
-  label: "Zalia",
+	code: "green",
+	label: "Zalia",
 };
 
 const thirdColor = {
-  code: "blue",
-  label: "Melyna",
+	code: "blue",
+	label: "Melyna",
 };
 
 const fourthColor = {
-  code: "red",
-  label: "Raudona",
+	code: "red",
+	label: "Raudona",
 };
 
 const colorObjects = [firstColor, secondColor, thirdColor, fourthColor];
 
-for (let i = 0; i < colorObjects.length; i++) {
-  const color = colorObjects[i];
-  const colorButton = document.createElement("button");
+const handleCreateColorButton = (color) => {
+	const colorButton = document.createElement("button");
 
-  colorButton.innerText = color.label;
-  colorButton.style.backgroundColor = color.code;
-  colorButton.onclick = () => {
-    calculator.style.backgroundColor = color.code;
-  };
+	colorButton.innerText = color.label;
+	colorButton.style.backgroundColor = color.code;
+	colorButton.onclick = () => {
+		calculator.style.backgroundColor = color.code;
+	};
 
-  if (color.label === "Balta") {
-    colorButton.style.border = "1px solid black";
-    colorButton.onmouseover = () => {
-      colorButton.style.backgroundColor = "grey";
-    };
-    colorButton.onmouseout = () => {
-      colorButton.style.backgroundColor = color.code;
-    };
-  }
+	if (color.label === "Balta") {
+		colorButton.style.border = "1px solid black";
+		colorButton.onmouseover = () => {
+			colorButton.style.backgroundColor = "grey";
+		};
+		colorButton.onmouseout = () => {
+			colorButton.style.backgroundColor = color.code;
+		};
+	}
 
-  colorButtons.appendChild(colorButton);
-}
+	colorButtons.appendChild(colorButton);
+};
+
+colorObjects.forEach(handleCreateColorButton);
